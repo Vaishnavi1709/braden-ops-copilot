@@ -147,4 +147,4 @@ This is the foundation. With another two weeks I would ship:
 
 ---
 
-Built by **Vaishnavi Ekbote** for Braden Auto Group's AI Operations Builder application.
+Built by **Vaishnavi Kale** for Braden Auto Group's AI Operations Builder application.
