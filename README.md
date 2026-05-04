@@ -3,6 +3,10 @@
 > An AI Daily Briefing engine for the Braden Auto Group. Built as a job-application
 > submission for the AI Operations Builder role (Option C in the test).
 
+**Live demo: [braden-ops-copilot.vercel.app](https://braden-ops-copilot.vercel.app/)**
+
+A good place to start: open [BRD-08 (Braden GMC Conroe)](https://braden-ops-copilot.vercel.app/briefings/BRD-08) — the highest-attention store yesterday — and read the AI-generated briefing.
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FVaishnavi1709%2Fbraden-ops-copilot&env=ANTHROPIC_API_KEY&envDescription=Optional.%20If%20unset%2C%20the%20app%20renders%20deterministic%20templated%20briefings%20instead%20of%20calling%20Claude.)
 
 Twelve stores, one command center. Each morning Claude reads yesterday's KPIs against a
