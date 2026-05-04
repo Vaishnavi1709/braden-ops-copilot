@@ -22,6 +22,11 @@ type RouteParams = { storeId: string };
 // is the Claude generation itself.
 export const dynamic = "force-dynamic";
 
+// Vercel default for serverless functions is 10s; bump to 30s so a slow
+// Claude call (cold start + reasoning) doesn't trip the timeout. The mock
+// fallback fires below this anyway, but being explicit avoids surprises.
+export const maxDuration = 30;
+
 export default async function BriefingPage({
   params,
 }: {

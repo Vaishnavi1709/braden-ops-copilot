@@ -8,6 +8,7 @@ import { generateBriefing } from "@/lib/briefing/generate";
 import { getStoreSnapshot } from "@/lib/data";
 
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 type RequestBody = { storeId?: unknown };
 
