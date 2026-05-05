@@ -1,7 +1,9 @@
 // 12-store roster for the Braden Auto Group.
-// Names, brands, and locales are illustrative — they exist only to make the
-// demo data feel concrete. Tuned so the group has realistic brand and size
-// variety (high-volume mass brands + a couple of luxury / specialty stores).
+// Markets are clustered around Chillicothe, OH (HQ) — Ross County and the
+// surrounding Pickaway / Pike / Scioto / Fairfield / Athens / Hocking
+// footprint, plus two Columbus-metro luxury stores. Mix is tuned so the group
+// has realistic brand and size variety (high-volume mass brands + a couple of
+// luxury / specialty stores). Names, GMs, and baselines are illustrative.
 
 export type Brand =
   | "Ford"
@@ -43,10 +45,10 @@ export type Store = {
 export const STORES: readonly Store[] = [
   {
     id: "BRD-01",
-    name: "Braden Ford of Cypress",
+    name: "Braden Ford of Chillicothe",
     brand: "Ford",
-    city: "Cypress",
-    state: "TX",
+    city: "Chillicothe",
+    state: "OH",
     gm: { name: "Marcus Reyes", email: "marcus.reyes@bradenauto.com" },
     bays: 18,
     persona: "high-volume",
@@ -62,10 +64,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-02",
-    name: "Braden Chevrolet Katy",
+    name: "Braden Chevrolet Circleville",
     brand: "Chevrolet",
-    city: "Katy",
-    state: "TX",
+    city: "Circleville",
+    state: "OH",
     gm: { name: "Dana Whitlock", email: "dana.whitlock@bradenauto.com" },
     bays: 16,
     persona: "high-volume",
@@ -81,10 +83,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-03",
-    name: "Braden Toyota Sugar Land",
+    name: "Braden Toyota Lancaster",
     brand: "Toyota",
-    city: "Sugar Land",
-    state: "TX",
+    city: "Lancaster",
+    state: "OH",
     gm: { name: "Priya Natarajan", email: "priya.natarajan@bradenauto.com" },
     bays: 22,
     persona: "service-heavy",
@@ -100,10 +102,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-04",
-    name: "Braden Honda Pearland",
+    name: "Braden Honda Athens",
     brand: "Honda",
-    city: "Pearland",
-    state: "TX",
+    city: "Athens",
+    state: "OH",
     gm: { name: "Tomás Aguilar", email: "tomas.aguilar@bradenauto.com" },
     bays: 14,
     persona: "balanced",
@@ -119,10 +121,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-05",
-    name: "Braden Nissan The Woodlands",
+    name: "Braden Nissan Portsmouth",
     brand: "Nissan",
-    city: "The Woodlands",
-    state: "TX",
+    city: "Portsmouth",
+    state: "OH",
     gm: { name: "Alicia Carver", email: "alicia.carver@bradenauto.com" },
     bays: 12,
     persona: "balanced",
@@ -138,10 +140,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-06",
-    name: "Braden Hyundai Friendswood",
+    name: "Braden Hyundai Hillsboro",
     brand: "Hyundai",
-    city: "Friendswood",
-    state: "TX",
+    city: "Hillsboro",
+    state: "OH",
     gm: { name: "Devon Park", email: "devon.park@bradenauto.com" },
     bays: 10,
     persona: "high-volume",
@@ -157,10 +159,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-07",
-    name: "Braden Kia League City",
+    name: "Braden Kia Waverly",
     brand: "Kia",
-    city: "League City",
-    state: "TX",
+    city: "Waverly",
+    state: "OH",
     gm: { name: "Renata Salinas", email: "renata.salinas@bradenauto.com" },
     bays: 10,
     persona: "balanced",
@@ -176,10 +178,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-08",
-    name: "Braden GMC Conroe",
+    name: "Braden GMC Washington Court House",
     brand: "GMC",
-    city: "Conroe",
-    state: "TX",
+    city: "Washington Court House",
+    state: "OH",
     gm: { name: "Kyle Henderson", email: "kyle.henderson@bradenauto.com" },
     bays: 14,
     persona: "high-volume",
@@ -195,10 +197,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-09",
-    name: "Braden Mazda Webster",
+    name: "Braden Mazda Jackson",
     brand: "Mazda",
-    city: "Webster",
-    state: "TX",
+    city: "Jackson",
+    state: "OH",
     gm: { name: "Sofia Chen", email: "sofia.chen@bradenauto.com" },
     bays: 8,
     persona: "balanced",
@@ -214,10 +216,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-10",
-    name: "Braden Lexus North Houston",
+    name: "Braden Lexus Dublin",
     brand: "Lexus",
-    city: "Spring",
-    state: "TX",
+    city: "Dublin",
+    state: "OH",
     gm: { name: "Harriet Owusu", email: "harriet.owusu@bradenauto.com" },
     bays: 20,
     persona: "luxury",
@@ -233,10 +235,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-11",
-    name: "Braden BMW Galleria",
+    name: "Braden BMW Easton",
     brand: "BMW",
-    city: "Houston",
-    state: "TX",
+    city: "Columbus",
+    state: "OH",
     gm: { name: "Alexei Volkov", email: "alexei.volkov@bradenauto.com" },
     bays: 18,
     persona: "luxury",
@@ -252,10 +254,10 @@ export const STORES: readonly Store[] = [
   },
   {
     id: "BRD-12",
-    name: "Braden Subaru Tomball",
+    name: "Braden Subaru Logan",
     brand: "Subaru",
-    city: "Tomball",
-    state: "TX",
+    city: "Logan",
+    state: "OH",
     gm: { name: "Connor McAllister", email: "connor.mcallister@bradenauto.com" },
     bays: 10,
     persona: "service-heavy",

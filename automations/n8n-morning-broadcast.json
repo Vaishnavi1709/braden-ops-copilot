@@ -1,0 +1,119 @@
+{
+  "name": "Braden — Morning Briefing Broadcast",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 6 * * 1-5"
+            }
+          ]
+        },
+        "timezone": "America/New_York"
+      },
+      "id": "1",
+      "name": "Cron · 6:30 AM weekdays",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [240, 320]
+    },
+    {
+      "parameters": {
+        "url": "https://braden-ops-copilot.vercel.app/api/morning-broadcast",
+        "method": "GET",
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "secret",
+              "value": "={{ $env.BRADEN_WEBHOOK_SECRET }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "2",
+      "name": "Fetch all 12 briefings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 320]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "stores",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Iterate stores",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [680, 320]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.delivery.email.to }}",
+        "subject": "={{ $json.delivery.email.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.delivery.email.html }}",
+        "options": {
+          "ccList": "rbraden@bradenauto.com"
+        }
+      },
+      "id": "4",
+      "name": "Gmail · Send to GM",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [920, 220],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Braden Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $json.delivery.slack.channelHint }}",
+        "text": "={{ $json.delivery.slack.text }}",
+        "otherOptions": {},
+        "blocks": "={{ JSON.stringify($json.delivery.slack.blocks) }}"
+      },
+      "id": "5",
+      "name": "Slack · Post to store channel",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [920, 420],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Braden Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron · 6:30 AM weekdays": {
+      "main": [
+        [{ "node": "Fetch all 12 briefings", "type": "main", "index": 0 }]
+      ]
+    },
+    "Fetch all 12 briefings": {
+      "main": [[{ "node": "Iterate stores", "type": "main", "index": 0 }]]
+    },
+    "Iterate stores": {
+      "main": [
+        [
+          { "node": "Gmail · Send to GM", "type": "main", "index": 0 },
+          { "node": "Slack · Post to store channel", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": ["braden", "ai-briefings", "morning-automation"]
+}

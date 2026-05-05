@@ -107,42 +107,127 @@ export default function AboutPage() {
 
         <Card>
           <CardHeader>
+            <CardTitle>Make.com / n8n delivery</CardTitle>
+            <CardSubtitle>The dashboard isn&apos;t where GMs read briefings — their phones are</CardSubtitle>
+          </CardHeader>
+          <CardBody className="text-[15px] leading-relaxed text-[var(--color-muted)] flex flex-col gap-3">
+            <p>
+              The JD&apos;s example is &ldquo;GM daily scorecard delivered to every
+              GM&apos;s phone every morning automatically&rdquo; — not a website
+              GMs have to navigate to. So the engine ships with a webhook
+              endpoint built for Make.com / n8n.
+            </p>
+            <p>
+              <code className="font-mono text-xs bg-[var(--color-surface-2)] px-1 py-0.5 rounded">
+                GET /api/morning-broadcast
+              </code>{" "}
+              returns all 12 generated briefings <em>plus</em> ready-to-send
+              email (subject + HTML body) and Slack (mrkdwn blocks) payloads,
+              addressed to each GM and pre-ranked by attention needed. A
+              Make.com scenario is six modules: cron → HTTP → iterator →
+              Gmail + Slack. Wire it once, it runs every weekday at 6:30 AM.
+              Scenario blueprint and an importable n8n workflow are in{" "}
+              <code className="font-mono text-xs bg-[var(--color-surface-2)] px-1 py-0.5 rounded">
+                automations/
+              </code>
+              .
+            </p>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>What I&apos;d build next</CardTitle>
-            <CardSubtitle>Two-week roadmap if this becomes the foundation</CardSubtitle>
+            <CardSubtitle>The same engine, the JD&apos;s other named tools</CardSubtitle>
           </CardHeader>
           <CardBody>
+            <p className="text-[15px] leading-relaxed text-[var(--color-muted)] mb-4">
+              The morning briefing is the kernel. Same Signal pipeline, same
+              tool-use + Zod pattern, different narrator and delivery target —
+              every other tool the JD calls out is a fork of this one.
+            </p>
             <ul className="flex flex-col gap-3 text-[15px] leading-relaxed text-[var(--color-muted)] list-disc pl-5">
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  BDC response bot.
+                </strong>{" "}
+                Lead-arrival webhook → Claude drafts a personalized reply →
+                CRM API in under 60 seconds. The 52% → 80%+ contact-rate move
+                the JD is targeting.
+              </li>
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  Inventory intelligence agent.
+                </strong>{" "}
+                Aged units + days-supply signals → Claude proposes price drops
+                → Dealertrack feed. Chad stops managing the spreadsheet.
+              </li>
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  Vendor invoice monitor.
+                </strong>{" "}
+                PDF/email ingest → extract → compare to contracted rates →
+                flag overcharges in Slack. Catches the Dealertrack
+                double-billing before two years pass.
+              </li>
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  Acquisition underwriter.
+                </strong>{" "}
+                Deal-data form → IRR / payback / go-no-go memo → emailed to
+                ownership in under five minutes.
+              </li>
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  Platform Manager financial briefing.
+                </strong>{" "}
+                The same broadcast endpoint, group-rolled-up + bottom-three,
+                delivered at 7 AM.
+              </li>
               <li>
                 <strong className="text-[var(--color-foreground)]">
                   Role-aware briefings.
                 </strong>{" "}
-                Same engine, different personas — Sales Manager gets desk
-                actions; Service Manager gets bay/RO actions; F&I Manager
-                gets product-penetration coaching.
-              </li>
-              <li>
-                <strong className="text-[var(--color-foreground)]">
-                  Slack / email delivery.
-                </strong>{" "}
-                Ship the briefing to each GM at 6:30 AM via their preferred
-                channel; one-click acknowledge → tracked in the dashboard.
+                Sales Manager gets desk actions, Service Manager gets bay/RO
+                actions, F&I Manager gets product-penetration coaching — one
+                signal pipeline, three prompts.
               </li>
               <li>
                 <strong className="text-[var(--color-foreground)]">
                   Action follow-through tracking.
                 </strong>{" "}
-                Did yesterday&apos;s actions actually move the metric? Loop the
-                outcome back into next morning&apos;s briefing as
-                accountability and as RLHF-style training data.
-              </li>
-              <li>
-                <strong className="text-[var(--color-foreground)]">
-                  Group-level briefing.
-                </strong>{" "}
-                One paragraph for ownership: which 3 stores to call today and
-                why.
+                Did yesterday&apos;s actions move the metric? Loop the outcome
+                into tomorrow&apos;s briefing as accountability — and as
+                RLHF-style training data for the engine itself.
               </li>
             </ul>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Why this is also a GOAT OPS kernel</CardTitle>
+            <CardSubtitle>
+              The pattern that makes this a $3M ARR conversation in 18 months
+            </CardSubtitle>
+          </CardHeader>
+          <CardBody className="text-[15px] leading-relaxed text-[var(--color-muted)] flex flex-col gap-3">
+            <p>
+              Every dealer group in the country has the same problem at 7 AM
+              — and is buying the same dashboards that don&apos;t solve it.
+              The architecture here (deterministic data adapter → pure-TS
+              signal compute → Claude tool-use narrator → multi-channel
+              delivery) is brand-, DMS-, and group-agnostic.
+            </p>
+            <p>
+              Swap the data adapter for a different DMS, swap the store
+              roster, swap the brand colors. The compute, the prompt
+              scaffolding, the Make.com / n8n delivery, the
+              fallback-never-breaks demo discipline — all of that is the
+              product. Each net-new tool (BDC bot, inventory agent, invoice
+              monitor) ships on the same kernel and licenses on the same
+              contract.
+            </p>
           </CardBody>
         </Card>
 

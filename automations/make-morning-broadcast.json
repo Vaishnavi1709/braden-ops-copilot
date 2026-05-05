@@ -1,0 +1,181 @@
+{
+  "name": "Braden — Morning Briefing Broadcast",
+  "flow": [
+    {
+      "id": 1,
+      "module": "builtin:BasicScheduler",
+      "version": 1,
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "restore": {}
+      },
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {},
+      "scheduling": {
+        "type": "cron",
+        "cron": "30 6 * * 1-5",
+        "timezone": "America/New_York"
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": { "x": 300, "y": 0 },
+        "restore": {},
+        "expect": [
+          { "name": "url", "type": "url", "label": "URL", "required": true },
+          { "name": "method", "type": "select", "label": "Method" }
+        ]
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://braden-ops-copilot.vercel.app/api/morning-broadcast",
+        "method": "GET",
+        "headers": [],
+        "qs": [
+          {
+            "name": "secret",
+            "value": "{{$env.BRADEN_WEBHOOK_SECRET}}"
+          }
+        ],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authPass": "",
+        "authUser": "",
+        "timeout": "60",
+        "shareCookies": false,
+        "ca": null,
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "designer": { "x": 600, "y": 0 },
+        "restore": {}
+      },
+      "mapper": {
+        "array": "{{2.data.stores}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "metadata": {
+        "designer": { "x": 900, "y": 0 },
+        "restore": {}
+      },
+      "mapper": null,
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "metadata": {
+                "designer": { "x": 1200, "y": -150 },
+                "restore": {},
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:google-restricted",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": "REPLACE_WITH_GMAIL_CONNECTION_ID"
+              },
+              "mapper": {
+                "to": ["{{3.delivery.email.to}}"],
+                "cc": ["rbraden@bradenauto.com"],
+                "subject": "{{3.delivery.email.subject}}",
+                "html": "{{3.delivery.email.html}}",
+                "attachments": [],
+                "isHtml": true
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "slack:CreateMessage",
+              "version": 4,
+              "metadata": {
+                "designer": { "x": 1200, "y": 150 },
+                "restore": {},
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:slack",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": "REPLACE_WITH_SLACK_CONNECTION_ID"
+              },
+              "mapper": {
+                "select": "channel",
+                "channel": "{{3.delivery.slack.channelHint}}",
+                "text": "{{3.delivery.slack.text}}",
+                "blocks": "{{3.delivery.slack.blocks}}",
+                "asUser": false,
+                "linkUserGroups": true,
+                "parseMode": "full",
+                "unfurlLinks": false,
+                "unfurlMedia": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "slots": null,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com",
+    "notes": [
+      "Replace REPLACE_WITH_GMAIL_CONNECTION_ID and REPLACE_WITH_SLACK_CONNECTION_ID with the IDs that Make assigns to your Gmail and Slack connections after importing.",
+      "Add BRADEN_WEBHOOK_SECRET to your Make team's environment variables (or hardcode it in the URL query if you prefer).",
+      "Make.com blueprint exports are versioned per workspace; if a module's version field is rejected on import, delete that module in the UI and re-add it from the picker — the rest of the wiring will remain intact.",
+      "Add a Filter between the Iterator (id 3) and the Router (id 4) with condition {{3.__IMTINDEX__}} less than 4 to route only the worst-three stores to ownership."
+    ]
+  }
+}
